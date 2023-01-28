@@ -22,18 +22,6 @@
                             <button class="btn btn-danger" name="delete" value="{{$question['id']}}">
                                 Delete
                             </button>
-                            @if (Auth::user()->id == 1)
-                                <div class="dropdown" id="dropdown_div">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="chooseParentQuizBtn" data-bs-toggle="dropdown" aria-expanded="false" value="{{$question['id']}}" name="chooseParentQuizBtn">
-                                        Choose Parent Quiz
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="chooseParentQuizBtn">
-                                        @foreach ($quizzes as $quiz)
-                                            <li><button class="dropdown-item" name="parentQuizBtn" id="parentQuizBtn" value="{{$quiz['id']}}">{{$quiz->name}}</button></li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
                         </td> 
                     </tr>
                 </table>
@@ -57,20 +45,4 @@
             @endforelse
         </div>
     </form>
-    <script>
-        $(document).ready(function(){
-            $("#chooseParentQuizBtn").on("click", function(){
-                var parentQuizId = $("#chooseParentQuizBtn").val();
-                var questionId = $(this).closest('li').find('button').val();
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('question.page', ['quiz' => $quiz['name']]) }}",
-                    data: {parentQuizId: parentQuizId, questionId: questionId},
-                    success: function(response){
-                        console.log(response);
-                    }
-                });
-            });
-        });
-    </script>
 @endsection

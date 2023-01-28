@@ -33,6 +33,7 @@ Route::get("/quiz", [QuizController::class, "quizList"])->name("mainPage");
 Route::post("/quiz", [QuizController::class, "quizPublish"])->name("mainPage");
 
 Route::get("/quiz/play/{name}", [QuizController::class, "quizPage"])->name("quiz.page");
+
 Route::get("/AddQuiz", [QuizController::class, "addQuiz"])->name("addQuiz");
 Route::post("/AddQuiz", [QuizController::class, "addQuiz"])->name("addQuiz");
 

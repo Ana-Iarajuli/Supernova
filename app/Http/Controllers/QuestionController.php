@@ -89,9 +89,6 @@ class QuestionController extends Controller
             'quiz_id'
         ];
 
-        $parent_quiz_id = $request->parentQuizId;
-        $question_id = $request->questionId;
-        Question::where("id", $question_id)->update(["quiz_id" => "$parent_quiz_id"]);
 
         if ($request->input("delete") != "") {
             $question_id = $request->input("delete");

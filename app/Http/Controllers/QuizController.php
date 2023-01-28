@@ -65,4 +65,35 @@ class QuizController extends Controller
             return redirect(route("user.index"))->with("message", "Quiz Created Successfully!");
         }
     }
+
+    public function quizPlay($name, Request $request)
+    {
+        $quiz = Quiz::where('name', '=', $name)->first();
+        $question_count = Question::where('quiz_id', '=', $quiz->id)->count();
+        $correctAnswer = false;
+        $question = Question::where([["position", $request->input("position")],['quiz_id', $quiz->id]])->first();
+
+        $old_question = Question::where([["position", $request->input("position")-1],['quiz_id', $quiz->id]])->first();
+    
+        if(isset($old_question)&&$old_question->correct_answer == $request->input("answer")) {
+            $correctAnswer = true;
+        }
+        if(isset($question)){
+            return response()->json([
+                "question" => $question->question,
+                "answer1" => $question->answer_1,
+                "answer2" => $question->answer_2,
+                "answer3" => $question->answer_3,
+                "answer4" => $question->answer_4,
+                "imageUrl" => $question->image_url,
+                "correctAnswer" => $correctAnswer,
+                "questionCount" => $question_count
+            ]);
+        }
+        return response()->json([
+            "correctAnswer" => $correctAnswer,
+            "questionCount" => $question_count
+        ]);
+
+    }
 }
