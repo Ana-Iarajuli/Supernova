@@ -33,16 +33,18 @@
                 <a href="{{ route('quiz.page', ['name' => $quizWithQuestionCount['quiz']['name']]) }}" class="btn btn-primary" name="view-quiz">
                     View Quiz
                 </a>
-                @if (Auth::user()->id == 1)
-                    <form action="" method="post">
-                        @csrf
-                        <button id="publishBtn" class="btn btn-dark" name="publish" value="{{$quizWithQuestionCount['quiz']['id']}}">
-                            Publish
-                        </button>
-                        <button id="deleteBtn" class="btn btn-danger" name="delete" value="{{$quizWithQuestionCount['quiz']['id']}}">
-                            Delete
-                        </button>
-                    </form>
+                @if (Auth::user())
+                    @if (Auth::user()->id == 1)
+                        <form action="" method="post">
+                            @csrf
+                            <button id="publishBtn" class="btn btn-dark" name="publish" value="{{$quizWithQuestionCount['quiz']['id']}}">
+                                Publish
+                            </button>
+                            <button id="deleteBtn" class="btn btn-danger" name="delete" value="{{$quizWithQuestionCount['quiz']['id']}}">
+                                Delete
+                            </button>
+                        </form>
+                    @endif
                 @endif
             </div>
         </div>
