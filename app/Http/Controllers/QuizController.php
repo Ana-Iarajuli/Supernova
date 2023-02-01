@@ -11,11 +11,13 @@ class QuizController extends Controller
 {
     public function quizList() {
         $user = Auth::user();
-        if ($user->id == 1) {
-            $quizzes = Quiz::select()->orderBy('created_at')->get();
-        } else {
-            $quizzes = Quiz::select()->where("status_id", 1)->orderBy('created_at')->get();
+        if ($user) {
+            if ($user->id == 1) {
+                $quizzes = Quiz::select()->orderBy('created_at')->get();
+            } 
         }
+        $quizzes = Quiz::select()->where("status_id", 1)->orderBy('created_at')->get();
+        
         $questionCounts = Question::selectRaw('quiz_id, count(*) as question_count')->groupBy('quiz_id')->get();
         $quizzesWithQuestionCounts = $quizzes->map(function ($quiz) use ($questionCounts) {
             $questionCount = $questionCounts->firstWhere('quiz_id', $quiz->id);
